@@ -1,7 +1,7 @@
 FROM ubuntu
 RUN apt-get update
-RUN apt-get install nodejs
-RUN apt-get install npm
+RUN apt-get -y install nodejs
+RUN apt-get -y install npm
 ADD . /test
 ENTRYPOINT npm i 
 ENTRYPOINT nodejs /test/src app.js
