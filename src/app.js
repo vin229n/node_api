@@ -8,7 +8,7 @@ const db= require('./utils/db')
 
 const app = express()
 
-//Define paths for Express config
+
 const publicDirectoryPath = path.join(__dirname,'../public')
 
 //SetUp static directory to serve 
