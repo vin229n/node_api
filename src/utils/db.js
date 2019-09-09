@@ -1,44 +1,80 @@
-const fs = require('fs')
+const mongodb = require('mongodb')
+const MongoClient = mongodb.MongoClient
+const connectionURL = 'mongodb://127.0.0.1:27017'
+const databseName= 'user-db'
+
+
 
 const addUser = (user) =>{
+    insertUser(user)
 
-    const users = loadUsers()
-    
-    users.push({
-        name:user.name,
-        password:user.password
+}
+
+
+const listUsers = (callback) => {
+    getUser((user) =>{
+         console.log(user.lenght)
+            callback(user)
+
     })
-    saveUsers(users)
 
-}
-
-
-const listUsers = () => {
-    const users = loadUsers()
-    if(users.length > 0)
-    {
-        return users
-    }
-    else
-        return []
     
 }
 
 
-const saveUsers = (users)=>{
-    const dataJSON = JSON.stringify(users)
-    fs.writeFileSync('db.json',dataJSON)
+const insertUser= (user)=>{
+
+    MongoClient.connect(
+        connectionURL,
+        { useNewUrlParser: true},
+        (err,client) => {
+            if(err) {
+                return console.log(err)
+            } 
+    
+            const db = client.db(databseName)
+    
+            db.collection('users').insertOne(user,
+                (error,result) =>{
+                if(error){
+                    return console.log('ubanble to insrt')
+                }
+    
+                //console.log(result.ops)
+            })
+            
+        }
+    )
+
+ 
 }
 
-const loadUsers = ()=>{
-    try{
-        const dataBuffer = fs.readFileSync('db.json')
-        const dataJSON = dataBuffer.toString()
-        return JSON.parse(dataJSON)
-    }catch(e){
-        return []
-    }
+
+const getUser= (callback) =>{
+    let users;
+    MongoClient.connect(
+        connectionURL,
+        { useNewUrlParser: true},
+        (err,client) => {
+            if(err) {
+                return console.log(err)
+            } 
+    
+            const db = client.db(databseName)
+    
+            db.collection('users').find().toArray((error,arr) =>{
+                if(error)
+                    return console.log(error)
+                callback(arr)                
+            })
+            
+        }
+    )
+   
+
 }
+
+
 
 module.exports = {
 	addUser: addUser,

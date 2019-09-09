@@ -6,6 +6,7 @@ const forecast = require('./utils/forcast')
 const db= require('./utils/db')
 
 
+
 const app = express()
 
 //Define paths for Express config
@@ -54,9 +55,12 @@ app.post('/register',(req,res) =>{
 })
 
 app.get('/users',(req,res) =>{
-	console.log('list');
-	const users = db.listUsers();
-    res.send(users)
+	
+	db.listUsers((users)=>{
+        console.log(users)
+        res.send(users)
+    });
+    
 })
 
 app.get('*',(req,res) =>{
