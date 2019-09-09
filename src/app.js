@@ -16,10 +16,6 @@ app.use(express.static(path.join(__dirname,'../public')))
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json());
 
-var corsOptions = {
-  origin: 'http://localhost:4200',
-  optionsSuccessStatus: 200 
-}
 
 app.use(cors())
 
