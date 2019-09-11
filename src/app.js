@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors())
 
 
-app.get('api/weather',(req,res) => {
+app.get('/api/weather',(req,res) => {
     if(!req.query.address) {
         return res.status(500).send({
             error: 'You must provide search address'
@@ -40,7 +40,7 @@ app.get('api/weather',(req,res) => {
     })
 })
 
-app.post('api/register',(req,res) =>{
+app.post('/api/register',(req,res) =>{
 	db.addUser(req.body)
 	
 	res.status(200).send(req.body)
