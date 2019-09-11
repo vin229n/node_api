@@ -4,9 +4,6 @@ const cors = require('cors')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forcast')
 const db= require('./utils/db')
-
-
-
 const app = express()
 
 const publicDirectoryPath = path.join(__dirname,'../public')
