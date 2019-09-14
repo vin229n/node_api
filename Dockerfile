@@ -6,6 +6,6 @@ RUN mkdir test
 ADD . /test
 WORKDIR /test
 RUN npm i
-CMD nodejs src/app.js
+CMD nohup nodejs src/app.js >> server.log &
 
 
