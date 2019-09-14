@@ -64,7 +64,7 @@ const getUser= (callback) =>{
     
             db.collection('users').find().toArray((error,arr) =>{
                 if(error)
-                    return console.log(error)
+                    callback({})
                 callback(arr)                
             })
             
