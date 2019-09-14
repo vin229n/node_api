@@ -46,7 +46,7 @@ app.post('/api/register',(req,res) =>{
 	res.status(200).send(req.body)
 })
 
-app.get('api/users',(req,res) =>{
+app.get('/api/users',(req,res) =>{
 	
 	db.listUsers((users)=>{
         console.log(users)
