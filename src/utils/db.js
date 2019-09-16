@@ -50,29 +50,7 @@ const insertUser= (user)=>{
 }
 
 
-const getUser= (callback) =>{
-    let users;
-    MongoClient.connect(
-        connectionURL,
-        { useNewUrlParser: true,useUnifiedTopology: true},
-        (err,client) => {
-            if(err) {
-                return console.log(err)
-            } 
-    
-            const db = client.db(databseName)
-    
-            db.collection('users').find().toArray((error,arr) =>{
-                if(error)
-                    return console.log(error)
-                callback(arr)                
-            })
-            
-        }
-    )
-   
 
-}
 
 const login = (user,callback) =>{
     MongoClient.connect(
@@ -103,7 +81,6 @@ const login = (user,callback) =>{
 
 module.exports = {
 	addUser,
-    listUsers,
     login
 }
 
