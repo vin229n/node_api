@@ -46,12 +46,14 @@ app.post('/api/register',(req,res) =>{
 	res.status(200).send(req.body)
 })
 
-app.get('api/users',(req,res) =>{
-	
-	db.listUsers((users)=>{
-        console.log(users)
-        res.send(users)
-    });
+app.post('/api/login',(req,res) =>{
+    db.login(req.body,(err,result) =>{
+        console.log(req.body)
+        if(err)
+            res.status(401).send({error:err})
+        else
+            res.status(200).send({user:result})
+    })
     
 })
 

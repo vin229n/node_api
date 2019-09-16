@@ -13,7 +13,7 @@ const addUser = (user) =>{
 
 const listUsers = (callback) => {
     getUser((user) =>{
-         console.log(user.lenght)
+        // console.log(user.lenght)
             callback(user)
 
     })
@@ -54,7 +54,7 @@ const getUser= (callback) =>{
     let users;
     MongoClient.connect(
         connectionURL,
-        { useNewUrlParser: true},
+        { useNewUrlParser: true,useUnifiedTopology: true},
         (err,client) => {
             if(err) {
                 return console.log(err)
@@ -74,10 +74,36 @@ const getUser= (callback) =>{
 
 }
 
+const login = (user,callback) =>{
+    MongoClient.connect(
+        connectionURL,
+        {useNewUrlParser:true,useUnifiedTopology: true},
+        (err,client) => {
+            const db = client.db(databseName)
+
+            db.collection('users').findOne({name: user.name , password: user.password},(err,result) => {
+                if(err)
+                    callback(err)
+                else{
+                    if(result == null)
+                    {
+                        
+                        callback('invalid credentials')
+                    }
+                    else
+                        callback(err,result)
+                }
+            })
+        }
+
+    )
+}
+
 
 
 module.exports = {
-	addUser: addUser,
-	listUsers: listUsers
+	addUser,
+    listUsers,
+    login
 }
 
